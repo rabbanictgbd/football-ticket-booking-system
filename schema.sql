@@ -1,4 +1,84 @@
 -- =========================================================================
+-- SYSTEM: Football Ticket Booking System
+-- DATABASE: football_ticket_booking
+-- =========================================================================
+
+-- DROP TABLES IF THEY ALREADY EXIST
+DROP TABLE IF EXISTS Bookings;
+DROP TABLE IF EXISTS Matches;
+DROP TABLE IF EXISTS Users;
+
+
+-- =========================================================================
+-- 1. CREATE USERS TABLE
+-- =========================================================================
+
+CREATE TABLE Users (
+    user_id INT PRIMARY KEY,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    role VARCHAR(20) NOT NULL
+        CHECK (role IN ('Ticket Manager', 'Football Fan')),
+    phone_number VARCHAR(20)
+);
+
+
+-- =========================================================================
+-- 2. CREATE MATCHES TABLE
+-- =========================================================================
+
+CREATE TABLE Matches (
+    match_id INT PRIMARY KEY,
+    fixture VARCHAR(150) NOT NULL,
+    tournament_category VARCHAR(100) NOT NULL,
+    base_ticket_price NUMERIC(10, 2) NOT NULL
+        CHECK (base_ticket_price >= 0),
+    match_status VARCHAR(20) NOT NULL
+        CHECK (match_status IN (
+            'Available',
+            'Selling Fast',
+            'Sold Out',
+            'Postponed'
+        ))
+);
+
+
+-- =========================================================================
+-- 3. CREATE BOOKINGS TABLE
+-- =========================================================================
+
+CREATE TABLE Bookings (
+    booking_id INT PRIMARY KEY,
+    user_id INT NOT NULL,
+    match_id INT NOT NULL,
+    seat_number VARCHAR(20),
+    payment_status VARCHAR(20)
+        CHECK (payment_status IN (
+            'Pending',
+            'Confirmed',
+            'Cancelled',
+            'Refunded'
+        )),
+    total_cost NUMERIC(10, 2) NOT NULL
+        CHECK (total_cost >= 0),
+
+    CONSTRAINT fk_user
+        FOREIGN KEY (user_id)
+        REFERENCES Users(user_id),
+
+    CONSTRAINT fk_match
+        FOREIGN KEY (match_id)
+        REFERENCES Matches(match_id)
+);
+
+
+--.........vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................
+--vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................vs..................
+
+
+
+
+-- =========================================================================
 -- SYSTEM: Football Ticket Booking System Database Setup Template
 -- DESCRIPTION: Pseudo-DDL Template for Table Creation & Data Insertion
 -- INSTRUCTIONS: Replace 'TYPE' and the constraint placeholders with your own
@@ -99,79 +179,3 @@ INSERT INTO Bookings (booking_id, user_id, match_id, seat_number, payment_status
 (505, 3, 102, 'C-20', 'Pending', 120.00);
 
 
-.........vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................
-vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................vs...........................vs..................
-
-
--- =========================================================================
--- SYSTEM: Football Ticket Booking System
--- DATABASE: football_ticket_booking
--- =========================================================================
-
--- DROP TABLES IF THEY ALREADY EXIST
-DROP TABLE IF EXISTS Bookings;
-DROP TABLE IF EXISTS Matches;
-DROP TABLE IF EXISTS Users;
-
-
--- =========================================================================
--- 1. CREATE USERS TABLE
--- =========================================================================
-
-CREATE TABLE Users (
-    user_id INT PRIMARY KEY,
-    full_name VARCHAR(100) NOT NULL,
-    email VARCHAR(150) UNIQUE NOT NULL,
-    role VARCHAR(20) NOT NULL
-        CHECK (role IN ('Ticket Manager', 'Football Fan')),
-    phone_number VARCHAR(20)
-);
-
-
--- =========================================================================
--- 2. CREATE MATCHES TABLE
--- =========================================================================
-
-CREATE TABLE Matches (
-    match_id INT PRIMARY KEY,
-    fixture VARCHAR(150) NOT NULL,
-    tournament_category VARCHAR(100) NOT NULL,
-    base_ticket_price NUMERIC(10, 2) NOT NULL
-        CHECK (base_ticket_price >= 0),
-    match_status VARCHAR(20) NOT NULL
-        CHECK (match_status IN (
-            'Available',
-            'Selling Fast',
-            'Sold Out',
-            'Postponed'
-        ))
-);
-
-
--- =========================================================================
--- 3. CREATE BOOKINGS TABLE
--- =========================================================================
-
-CREATE TABLE Bookings (
-    booking_id INT PRIMARY KEY,
-    user_id INT NOT NULL,
-    match_id INT NOT NULL,
-    seat_number VARCHAR(20),
-    payment_status VARCHAR(20)
-        CHECK (payment_status IN (
-            'Pending',
-            'Confirmed',
-            'Cancelled',
-            'Refunded'
-        )),
-    total_cost NUMERIC(10, 2) NOT NULL
-        CHECK (total_cost >= 0),
-
-    CONSTRAINT fk_user
-        FOREIGN KEY (user_id)
-        REFERENCES Users(user_id),
-
-    CONSTRAINT fk_match
-        FOREIGN KEY (match_id)
-        REFERENCES Matches(match_id)
-);
