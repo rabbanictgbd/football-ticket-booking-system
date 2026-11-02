@@ -1,16 +1,13 @@
-CREATE TABLE Matches (
-    match_id int primary key,
-    fixture varchar(50) not null,
-    tournament_category varchar(50) not null,
-    base_ticket_price numeric(10,2) not null check (base_ticket_price >= 0),
-    match_status varchar(50) not null CHECK (match_status IN (
-            'Available',
-            'Selling Fast',
-            'Sold Out',
-            'Postponed'
-        ))
-    
-    -- Write your constraint to make 'match_id' the Primary Key
-    -- Write your check constraint to prevent negative ticket prices
-    -- Write your check constraint to restrict 'match_status' values
-);
+-- Query 1: Retrieve all upcoming football matches belonging to the 'Champions League' where the match status is 'Available'.
+-- Sample Output:
+
+-- match_id	fixture	base_ticket_price
+-- 101	Real Madrid vs Barcelona	150
+-- 103	Bayern Munich vs PSG	130
+
+select match_id, fixture, base_ticket_price
+  from matches
+  where match_status = 'Available' 
+  and tournament_category = 'Champions League';
+
+  
