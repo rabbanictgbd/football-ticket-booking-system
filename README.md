@@ -113,15 +113,10 @@ football-ticket-booking-system/
 - Subqueries
 - `LIMIT` and `OFFSET`
 
-## ER Diagram
-
-Add your entity relationship diagram here once it is available.
-
-
 
 ## Assignment Deliverables
 
-- ER diagram link: [Add your public ERD link here.](https://drive.google.com/file/d/1h2HLyQGLVrJ91QtctzSXW5KvR9g_gbkS/view?usp=drive_link)
+- ER diagram link: https://drive.google.com/file/d/1h2HLyQGLVrJ91QtctzSXW5KvR9g_gbkS/view?usp=drive_link
 - GitHub repository: https://github.com/rabbanictgbd/football-ticket-booking-system
 - Video demonstration: https://drive.google.com/file/d/1XCAqMwjbdc7oep-FuEZg9gmg0rDyWRi6/view?usp=drive_link
 
